@@ -61,7 +61,7 @@ def main():
             total_loss += nd.sum(loss).asscalar()
             # print("Epoch %d, average loss: %f" % (epoch, total_loss / total))
     print(W_hat, b_hat)
-    print(t1-time.time())
+    print(time.time() - t1)
 
 if __name__ == "__main__":
     main()
