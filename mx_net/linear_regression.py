@@ -2,7 +2,7 @@ import mxnet.ndarray as nd
 import mxnet.autograd as ad
 import random
 import mxnet as mx
-
+import time
 
 ctx=mx.gpu(0)
 try:
@@ -30,9 +30,10 @@ def SGD(params, lr):
 
 
 def main():
+    t1 = time.time()
     # generating dataset
     num_features = 5
-    total = 1000
+    total = 10000
     weights = [1.5, -3.4, -2.6, 7.2, -3.0]
     biases = 2.6
     X = nd.random_normal(shape=(total, num_features),ctx=ctx)
@@ -60,6 +61,7 @@ def main():
             total_loss += nd.sum(loss).asscalar()
             # print("Epoch %d, average loss: %f" % (epoch, total_loss / total))
     print(W_hat, b_hat)
+    print(t1-time.time())
 
 if __name__ == "__main__":
     main()
