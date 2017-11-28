@@ -32,6 +32,9 @@ def main():
     data, label = mnist_train[0:9]
     show_images(data)
     print(get_text_labels(label))
+    batch_size = 256
+    train_data = gluon.data.DataLoader(mnist_train, batch_size, shuffle=True)
+    test_data = gluon.data.DataLoader(mnist_test, batch_size, shuffle=False)
 
 
 
