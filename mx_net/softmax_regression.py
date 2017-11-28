@@ -11,20 +11,20 @@ mnist_test = gluon.data.vision.FashionMNIST(train=False, transform=transform)
 import matplotlib.pyplot as plt
 
 
-class Net():
-    def __init__(self,input_size,batch_size,output_size):
-        self.weights = nd.random_normal(shape = (input_size[1],output_size))
-        self.bias = nd.zeros(shape = (1,output_size))
-        self.params = [self.weights,self.bias]
-    def data_load(self,data):
+class Net:
+    def __init__(self, input_size, output_size):
+        self.weights = nd.random_normal(shape=(input_size[1], output_size))
+        self.bias = nd.zeros(shape=(1, output_size))
+        self.params = [self.weights, self.bias]
+
+    def data_load(self, data):
         self.data = data
-    
+
     def soft_max(self):
-        self.pre_act = nd.dot(self.data,self.weights) + self.bias
+        self.pre_act = nd.dot(self.data, self.weights) + self.bias
         tmp = nd.exp(self.pre_act)
-        sum_tmp = tmp.sum(axis = 1)
+        sum_tmp = tmp.sum(axis=1)
         self.pro_act = tmp / sum_tmp
-        
 
 
 def show_image(data):
@@ -36,9 +36,6 @@ def show_image(data):
         figs[i].axes.get_xaxis().set_visible(False)
         figs[i].axes.get_yaxis().set_visible(False)
     plt.show()
-
-
-
 
 
 def get_text_labels(label):
