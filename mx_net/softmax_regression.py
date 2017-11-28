@@ -28,7 +28,8 @@ class Net:
     def cross_entropy(self, label):
         return - nd.pick(nd.log(self.pro_act), y)
 
-
+    def accuracy(self, label):
+        return nd.mean(self.pro_act.argmax(axis=1)==label).asscalar()
 def show_image(data):
     n = data.shape[0]
     _, figs = plt.subplots(1, n, figsize=[15, 15])
@@ -48,6 +49,13 @@ def get_text_labels(label):
     return [text_labels[int(i)] for i in label]
 
 
+def evaluate_accuracy(data_iterator, net):
+    acc = 0.
+    for data, label in data_iterator:
+        output = net(data)
+        acc += accuracy(output, label)
+    return acc / len(data_iterator)
+
 def main():
     data, label = mnist_train[0:9]
     show_image(data)
@@ -59,9 +67,23 @@ def main():
     epochs = 5
     learning_rate = .02
     net = 
-    for epoch in range(epochs):
-        for input,label in train_data:
-            
+    train_loss = 0.
+        train_acc = 0.
+        for data, label in train_data:
+            with autograd.record():
+                output = net(data)
+                loss = cross_entropy(output, label)
+            loss.backward()
+            # 将梯度做平均，这样学习率会对batch size不那么敏感
+            SGD(params, learning_rate/batch_size)
+
+            train_loss += nd.mean(loss).asscalar()
+            train_acc += accuracy(output, label)
+
+        test_acc = evaluate_accuracy(test_data, net)
+        print("Epoch %d. Loss: %f, Train acc %f, Test acc %f" % (
+            epoch, train_loss/len(train_data), train_acc/len(train_data), test_acc))
+
 
 
 if __name__ == '__main__':
