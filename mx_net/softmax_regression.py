@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 
 
 class Net:
-    def __init__(self, input_size, output_size):
-        self.weights = nd.random_normal(shape=(input_size[1], output_size))
+    def __init__(self, input_dim, output_size):
+        self.weights = nd.random_normal(shape=(input_dim, output_size))
         self.bias = nd.zeros(shape=(1, output_size))
         self.params = [self.weights, self.bias]
         self.pre_act = None
@@ -24,6 +24,9 @@ class Net:
         tmp = nd.exp(self.pre_act)
         sum_tmp = tmp.sum(axis=1)
         self.pro_act = tmp / sum_tmp
+        
+    def cross_entropy(self, label):
+        return - nd.pick(nd.log(self.pro_act), y)
 
 
 def show_image(data):
@@ -52,6 +55,13 @@ def main():
     batch_size = 256
     train_data = gluon.data.DataLoader(mnist_train, batch_size, shuffle=True)
     test_data = gluon.data.DataLoader(mnist_test, batch_size, shuffle=False)
+    
+    epochs = 5
+    learning_rate = .02
+    net = 
+    for epoch in range(epochs):
+        for input,label in train_data:
+            
 
 
 if __name__ == '__main__':
